@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #fff;
+    }
+
+    .calculator {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0 25px rgba(0, 234, 255, 0.6);
+        backdrop-filter: blur(15px);
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .display {
+        width: 100%;
+        height: 60px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #00eaff;
+        font-size: 2rem;
+        text-align: right;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: inset 0 0 15px rgba(0, 234, 255, 0.5);
+        overflow-x: auto;
+    }
+
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 80px);
+        gap: 15px;
+        justify-content: center;
+    }
+
+    button {
+        height: 70px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 0 10px rgba(0, 234, 255, 0.3);
+    }
+
+    button:hover {
+        background: linear-gradient(135deg, #00eaff, #00ffa5);
+        color: #000;
+        box-shadow: 0 0 20px #00eaff, 0 0 40px #00ffa5;
+        transform: scale(1.1);
+    }
+
+    .equal {
+        grid-column: span 2;
+        background: linear-gradient(135deg, #00ffa5, #00eaff);
+        color: #000;
+        box-shadow: 0 0 20px #00ffa5, 0 0 40px #00eaff;
+    }
+
+    .equal:hover {
+        background: linear-gradient(135deg, #00eaff, #00ffa5);
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: scale(0.8);}
+        to {opacity: 1; transform: scale(1);}
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="deleteLast()">⌫</button>
+        <button onclick="appendValue('%')">%</button>
+        <button onclick="appendValue('/')">÷</button>
+
+        <button onclick="appendValue('7')">7</button>
+        <button onclick="appendValue('8')">8</button>
+        <button onclick="appendValue('9')">9</button>
+        <button onclick="appendValue('*')">×</button>
+
+        <button onclick="appendValue('4')">4</button>
+        <button onclick="appendValue('5')">5</button>
+        <button onclick="appendValue('6')">6</button>
+        <button onclick="appendValue('-')">−</button>
+
+        <button onclick="appendValue('1')">1</button>
+        <button onclick="appendValue('2')">2</button>
+        <button onclick="appendValue('3')">3</button>
+        <button onclick="appendValue('+')">+</button>
+
+        <button onclick="appendValue('0')">0</button>
+        <button onclick="appendValue('.')">.</button>
+        <button class="equal" onclick="calculate()">=</button>
+    </div>
+</div>
+
+<script>
+    let display = document.getElementById("display");
+
+    function appendValue(value) {
+        if (display.innerText === "0") {
+            display.innerText = value;
+        } else {
+            display.innerText += value;
+        }
+    }
+
+    function clearDisplay() {
+        display.innerText = "0";
+    }
+
+    function deleteLast() {
+        if (display.innerText.length > 1) {
+            display.innerText = display.innerText.slice(0, -1);
+        } else {
+            display.innerText = "0";
+        }
+    }
+
+    function calculate() {
+        try {
+            display.innerText = eval(display.innerText.replace("÷","/").replace("×","*"));
+        } catch {
+            display.innerText = "Error";
+        }
+    }
+</script>
+
+</body>
+</html>
